@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html>
+    <title>toDo List</title>
+    <meta charset="utf-8">
+    <link rel = "stylesheet" href = "css/styles.css">
+</html>
+<body>
+    <div class = "box" id = "heading">
+        <h1 ><%=kindOfDay%>!</h1>
+    </div>
+    
+    <div class = "box">
+        <% let i; %>
+        <%for(i = 0; i < arrItems.length; i++){%>
+            <div class = "item">
+                <input type = "checkbox">
+                <p><%=arrItems[i]%></p>
+            </div>   
+        <%}%>
+
+        <form class = "item" action="/" method="post">
+            <input type = "text" name = "newItem" placeholder="Enter task">
+            <button type = "submit">+</button>
+        </form>
+    </div>
+    
+    <ul>
+        
+    </ul>
+   
+   
+    
+</body>

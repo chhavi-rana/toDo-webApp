@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
+const mongoose = require('mongoose');
 
 let items = [];
 
@@ -10,6 +11,12 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 app.set('view engine', 'ejs');
+
+mongoose.set('strictQuery', false);
+mongoose.connect("mongodb://localhost:27017/toDolistDB");
+
+
+
 
 let today = new Date();
 let options = {

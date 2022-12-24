@@ -13,10 +13,13 @@
     <div class = "box">
         <% let i; %>
         <%for(i = 0; i < arrItems.length; i++){%>
-            <div class = "item">
-                <input type = "checkbox">
-                <p><%=arrItems[i].name%></p>
-            </div>   
+            <form action = "/delete" method = "post" >
+                <div class = "item">
+                    <input type = "checkbox" name = "checkbox" value = <%=arrItems[i]._id%> onchange="this.form.submit()">
+                    <p><%=arrItems[i].name%></p>
+                </div>
+            </form>
+               
         <%}%>
 
         <form class = "item" action="/" method="post">
@@ -24,11 +27,6 @@
             <button type = "submit">+</button>
         </form>
     </div>
-    
-    <ul>
-        
-    </ul>
-   
-   
+     
     
 </body>

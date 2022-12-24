@@ -48,12 +48,10 @@ let day = today.toLocaleDateString("en-US", options);
 
 
 
-setTimeout(function(){
-    app.get("/", function(req, res){
-        //console.log(myItems);
-        res.render('list', {kindOfDay : day, arrItems : myItems })
-    });
-}, 200);
+app.get("/", function(req, res){
+    //console.log(myItems);
+    res.render('list', {kindOfDay : day, arrItems : myItems })
+});
 
 
 app.post('/', function(req, res){

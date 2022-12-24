@@ -46,29 +46,62 @@ Item.find(function(err, items){
 
 
 app.get("/", function(req, res){
-    console.log(myItems);
+    //console.log(myItems);
     res.render('list', {kindOfDay : day, arrItems : myItems })
 });
 
 
 app.post('/', function(req, res){
     let item = req.body.newItem;
-    let newItem = new Item({
+    let newItem = new Item({                       // Add new items to our todoList database.
         name : item
     });
     newItem.save();
+    
+    setTimeout(function(){
+        Item.find(function(err, items){                     // Render items from our toDoList database.
+            if(err){
+                console.log(err);
+            }else{
+                console.log(items);
+                console.log("AAAAAAAAAAAAAAAAAAAAA");
+                
+                myItems = [...items];               // copy items into myItems.
+                //console.log(myItems);
+                res.redirect("/");
+                
+            }
+        });
+    }, 200);
+   
+});
+
+
+app.post("/delete", function(req, res){
+    console.log(req.body.checkbox);
+    const checkedItem = req.body.checkbox;
+    
+    Item.findByIdAndRemove(checkedItem, function(err){               // Delete items from our toDolist database.
+        if(err){
+            console.log(err);
+        }else{
+            console.log("successfully deleted.")
+        }
+    });    
+    
     
     Item.find(function(err, items){
         if(err){
             console.log(err);
         }else{
-            console.log(items);
-            myItems = [...items];
-            res.redirect("/");
-            
+            //console.log(items);
+            myItems = [...items];               // copy items into myItems.
+            setTimeout(function(){
+               res.redirect("/")
+            }, 200);            
         }
-    });
-   
+    }); 
+        
 });
 
 

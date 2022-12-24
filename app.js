@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const mongoose = require('mongoose');
+require('dotenv').config()
 
 let myItems = [];
 
@@ -15,8 +16,8 @@ app.set('view engine', 'ejs');
 
 //Setting up database - mongoDB
 mongoose.set('strictQuery', false);
-mongoose.connect("mongodb://localhost:27017/toDolistDB");
-
+mongoose.connect("mongodb+srv://admin-chhavi:" + process.env.password + "@cluster0.xp215ns.mongodb.net/toDolistDB");
+//mongodb+srv://admin-chhavi:T9XIktCvEdK9PSmY@cluster0.xp215ns.mongodb.net/toDolistDB
 // Defining a schema
 const itemSchema = new mongoose.Schema({
     name : String
@@ -25,6 +26,15 @@ const itemSchema = new mongoose.Schema({
 
 // Defining model
 const Item = mongoose.model("Item", itemSchema);
+
+Item.find(function(err, items){
+    if(err){
+        console.log(err);
+    }else{
+        console.log(1);
+        myItems = [...items];
+    }
+});
 
 
 let today = new Date();
@@ -36,19 +46,14 @@ let options = {
 let day = today.toLocaleDateString("en-US", options);
 
 
-Item.find(function(err, items){
-    if(err){
-        console.log(err);
-    }else{
-        myItems = [...items];
-    }
-});
 
 
-app.get("/", function(req, res){
-    //console.log(myItems);
-    res.render('list', {kindOfDay : day, arrItems : myItems })
-});
+setTimeout(function(){
+    app.get("/", function(req, res){
+        //console.log(myItems);
+        res.render('list', {kindOfDay : day, arrItems : myItems })
+    });
+}, 200);
 
 
 app.post('/', function(req, res){
@@ -90,17 +95,17 @@ app.post("/delete", function(req, res){
     });    
     
     
-    Item.find(function(err, items){
-        if(err){
-            console.log(err);
-        }else{
-            //console.log(items);
-            myItems = [...items];               // copy items into myItems.
-            setTimeout(function(){
-               res.redirect("/")
-            }, 200);            
-        }
-    }); 
+    setTimeout(function(){
+        Item.find(function(err, items){
+            if(err){
+                console.log(err);
+            }else{
+                //console.log(items);
+                myItems = [...items];               // copy items into myItems.
+                res.redirect("/");           
+            }
+        },500);
+    }) 
         
 });
 

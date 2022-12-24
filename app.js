@@ -104,7 +104,7 @@ app.post("/delete", function(req, res){
                 myItems = [...items];               // copy items into myItems.
                 res.redirect("/");           
             }
-        },500);
+        },200);
     }) 
         
 });

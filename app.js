@@ -27,15 +27,6 @@ const itemSchema = new mongoose.Schema({
 // Defining model
 const Item = mongoose.model("Item", itemSchema);
 
-Item.find(function(err, items){
-    if(err){
-        console.log(err);
-    }else{
-        console.log(1);
-        myItems = [...items];
-    }
-});
-
 
 let today = new Date();
 let options = {
@@ -50,6 +41,14 @@ let day = today.toLocaleDateString("en-US", options);
 
 app.get("/", function(req, res){
     //console.log(myItems);
+    Item.find(function(err, items){
+        if(err){
+        console.log(err);
+        }else{
+        console.log(1);
+        myItems = [...items];
+        }
+    });
     res.render('list', {kindOfDay : day, arrItems : myItems })
 });
 
@@ -102,8 +101,8 @@ app.post("/delete", function(req, res){
                 myItems = [...items];               // copy items into myItems.
                 res.redirect("/");           
             }
-        },200);
-    }) 
+        });
+    },200); 
         
 });
 

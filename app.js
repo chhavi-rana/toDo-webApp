@@ -17,7 +17,7 @@ app.set('view engine', 'ejs');
 //Setting up database - mongoDB
 mongoose.set('strictQuery', false);
 mongoose.connect("mongodb+srv://admin-chhavi:" + process.env.password + "@cluster0.xp215ns.mongodb.net/toDolistDB");
-//mongodb+srv://admin-chhavi:T9XIktCvEdK9PSmY@cluster0.xp215ns.mongodb.net/toDolistDB
+
 // Defining a schema
 const itemSchema = new mongoose.Schema({
     name : String
@@ -49,7 +49,9 @@ app.get("/", function(req, res){
         myItems = [...items];
         }
     });
-    res.render('list', {kindOfDay : day, arrItems : myItems })
+    setTimeout(function(){
+     res.render('list', {kindOfDay : day, arrItems : myItems });
+    }, 1000);
 });
 
 
